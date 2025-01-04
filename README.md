@@ -36,7 +36,29 @@ In this lab, you will make a mock version of [Desmos](https://www.desmos.com/cal
   <img src="Lab09Output3.png" width="48%">
 </div>
 
+>The auto grader will not check for correctness, this will be manually done.
+
 ## Optional
 - The grid and function do not need to respond to zooming for this lab. As an extra challenge, you can complete this task.
 - The GUI have the option to cut the domain and range (Default: -400, +400), where the function only gets drawn if it is within the domain and range. This is also optional.
 - As a final extra challenge, you can change the scale of the domain and range (Default: 1). For example, the domain can scale by 2 $(2, 4, 6....)$ and the range can scale by 0.5 $(0.5, 1, 1.5...)$. Different scaling would transform the function.
+
+## How to Submit
+
+### In session
+
+(Preferably)
+
+- Show your local and remote repositories to the TA to prove that you have finished this lab.
+
+### After lab hours
+
+(1 week to submit - before your next lab session)
+
+- Link to your GitHub repository on Canvas
+- Screenshots of the command line terminal
+- Screenshots of the UI
+- Add screenshots to `README.md`
+
+The TA can provide oral feedback if you do not receive full marks for any lab assignment, but it is most
+appropriate to ask the TA for this feedback in a timely fashion (i.e. ask now, not at the end of the term).
