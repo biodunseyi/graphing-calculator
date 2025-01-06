@@ -16,7 +16,7 @@ In this lab, you will make a mock version of [Desmos](https://www.desmos.com/cal
 - You will implement two trigonometric functions, `components/function/Cosine.java` and `components/function/Tangent.java`:
   - `getFirstDerivative()`: Calculate the first derivative associated with the function.
   - `getSecondDerivative()`: Calculate the second derivative associated with the function.
-  - `getValueAt()`: Given `x` and `FuntionType`, return the `y` value at `x`.
+  - `getValueAt()`: Given `x` and `FunctionType`, return the `y` value at `x`.
     <br> <br>
     `Sine` has already been implemented for you. Use this as an example for the other two trigonometric functions.
 
