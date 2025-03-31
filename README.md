@@ -1,4 +1,4 @@
-# Graphing Calculator (Lab 09)
+# Graphing Calculator 
 
 This is a Java-based 2D graphing calculator modeled after Desmos, created as part of a software systems development course. It renders mathematical functions such as polynomials, trigonometric functions (sin, cos, tan), and logarithmic functions, along with their:
 
