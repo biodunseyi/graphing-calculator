@@ -24,7 +24,8 @@ The calculator uses `Java Swing` for GUI rendering and `Graphics2D` for drawing 
 
 ## 📸 Screenshot
 
-![Graph UI](path-to-screenshot.png)
+![Graph UI](![image](https://github.com/user-attachments/assets/7c1bd29f-11e5-4948-b88f-4e8527e393c0)
+)
 
 ## 🚀 How to Run
 
