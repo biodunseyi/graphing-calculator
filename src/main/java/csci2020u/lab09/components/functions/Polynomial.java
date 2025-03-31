@@ -2,10 +2,14 @@ package csci2020u.lab09.components.functions;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import csci2020u.lab09.GraphGUI;
+import csci2020u.lab09.components.Point;
 import csci2020u.lab09.enums.FunctionType;
+import csci2020u.lab09.enums.RootType;
 
 public final class Polynomial extends Function {
 
@@ -16,7 +20,7 @@ public final class Polynomial extends Function {
         super(gui);
         Pattern sortPolynomial = Pattern.compile("(([+\\-])?(\\d+\\.?\\d*x|\\d+\\.?\\d*|x))(\\^\\d+)?");
         Matcher matcher = sortPolynomial.matcher(polynomial);
-        
+
         for (int i = 0; matcher.find(); i++) {
             coefficients = Arrays.copyOf(coefficients, coefficients.length + 1);
             degrees = Arrays.copyOf(degrees, degrees.length + 1);
@@ -27,6 +31,7 @@ public final class Polynomial extends Function {
                 } else {
                     degrees[i] = Integer.parseInt(matcher.group(4).replace("^", ""));
                 }
+
                 switch (matcher.group(1)) {
                     case "x":
                     case "+x":
@@ -75,6 +80,7 @@ public final class Polynomial extends Function {
                 }
             }
         }
+
         return s.toString();
     }
 
@@ -91,7 +97,8 @@ public final class Polynomial extends Function {
             case SECOND_DERIVATIVE:
                 return new Polynomial(gui, getSecondDerivative()).getValueAt(x, FunctionType.ORIGINAL);
             case THIRD_DERIVATIVE:
-                return new Polynomial(gui, new Polynomial(gui, getSecondDerivative()).getFirstDerivative()).getValueAt(x, FunctionType.ORIGINAL);
+                return new Polynomial(gui, new Polynomial(gui, getSecondDerivative()).getFirstDerivative())
+                        .getValueAt(x, FunctionType.ORIGINAL);
             default:
                 double y = 0;
                 for (int i = 0; i < coefficients.length; i++) {
@@ -99,5 +106,20 @@ public final class Polynomial extends Function {
                 }
                 return y;
         }
+    }
+
+    @Override
+    public HashSet<Point> getXIntercepts() {
+        return RootType.X_INTERCEPT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+    }
+
+    @Override
+    public HashSet<Point> getCriticalPoints() {
+        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+    }
+
+    @Override
+    public HashSet<Point> getInflectionPoints() {
+        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 }

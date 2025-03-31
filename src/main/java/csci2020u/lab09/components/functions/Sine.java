@@ -1,7 +1,10 @@
 package csci2020u.lab09.components.functions;
 
+import java.util.HashSet;
 import csci2020u.lab09.GraphGUI;
+import csci2020u.lab09.components.Point;
 import csci2020u.lab09.enums.FunctionType;
+import csci2020u.lab09.enums.RootType;
 
 public class Sine extends Trignometric {
 
@@ -31,5 +34,20 @@ public class Sine extends Trignometric {
             default:
                 return a * Math.sin(k * x);
         }
+    }
+
+    @Override
+    public HashSet<Point> getXIntercepts() {
+        return RootType.X_INTERCEPT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+    }
+
+    @Override
+    public HashSet<Point> getCriticalPoints() {
+        return RootType.CRITICAL_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
+    }
+
+    @Override
+    public HashSet<Point> getInflectionPoints() {
+        return RootType.INFLECTION_POINT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 }

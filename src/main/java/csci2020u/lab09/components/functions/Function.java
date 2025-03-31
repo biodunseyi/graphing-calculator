@@ -1,45 +1,47 @@
 package csci2020u.lab09.components.functions;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.HashSet;
 import csci2020u.lab09.GraphGUI;
 import csci2020u.lab09.components.GraphComponent;
 import csci2020u.lab09.components.Point;
 import csci2020u.lab09.enums.FunctionType;
-import csci2020u.lab09.enums.RootType;
 
 public abstract class Function extends GraphComponent {
-    
-    
+
     protected Function(GraphGUI gui) {
         super(gui);
     }
 
     @Override
-    public void draw(Graphics2D graphics2D) {
-        /*
-        * TODO: Graph the function
-        *  - Increment x at a small step, s (e.g. 0.02)
-        *  - Call getValueAt() to get f(x). Use `FunctionType.ORIGINAL` as the function type to call getValueAt().
-        *  - Draw a line from (x, f(x)) to (x + s, f(x + s))
-        *
-        *  Optional:
-        *  - The drawing function can respond to zooming
-        *  - The drawing function can respond to domain and range scales.
-        *  - The drawing function only draws within the domain and range
-        * */
+    public void draw(Graphics2D g) {
+        double minDomain = Math.max(gui.getMinDomain(), -400);
+        double maxDomain = Math.min(gui.getMaxDomain(), 400);
+        double step = 0.02; // Increment step for x
+
+        g.setColor(Color.BLUE); // Set function color
+
+        for (double x = minDomain; x < maxDomain; x += step) {
+            double y1 = getValueAt(x, FunctionType.ORIGINAL);
+            double y2 = getValueAt(x + step, FunctionType.ORIGINAL);
+
+            // Convert mathematical coordinates to screen coordinates
+            int screenX1 = gui.toScreenX(x);
+            int screenY1 = gui.toScreenY(y1);
+            int screenX2 = gui.toScreenX(x + step);
+            int screenY2 = gui.toScreenY(y2);
+
+            // Ensure points are within the screen bounds before drawing
+            if (isWithinRange(y1) && isWithinRange(y2)) {
+                g.drawLine(screenX1, screenY1, screenX2, screenY2);
+            }
+        }
     }
 
-    public HashSet<Point> getXIntercepts() {
-        return RootType.X_INTERCEPT.getRoots(gui, this, Math.max(gui.getPlaneWidth() / gui.getZoom() * gui.getDomainStep() / -2, gui.getMinDomain()), Math.min(gui.getPlaneWidth() / gui.getZoom() * gui.getDomainStep() / 2, gui.getMaxDomain()));
-    }
-
-    public HashSet<Point> getCriticalPoints() {
-        return RootType.CRITICAL_POINT.getRoots(gui, this, Math.max(gui.getPlaneWidth() / gui.getZoom() * gui.getDomainStep() / -2, gui.getMinDomain()), Math.min(gui.getPlaneWidth() / gui.getZoom() * gui.getDomainStep() / 2, gui.getMaxDomain()));
-    }
-
-    public HashSet<Point> getInflectionPoints() {
-        return RootType.INFLECTION_POINT.getRoots(gui, this, Math.max(gui.getPlaneWidth() / gui.getZoom() * gui.getDomainStep() / -2, gui.getMinDomain()), Math.min(gui.getPlaneWidth() / gui.getZoom() * gui.getDomainStep() / 2, gui.getMaxDomain()));
+    // Utility method to check if a value is within the graphing range
+    private boolean isWithinRange(double y) {
+        return y >= gui.getMinRange() && y <= gui.getMaxRange();
     }
 
     public abstract String getFirstDerivative();
@@ -47,4 +49,10 @@ public abstract class Function extends GraphComponent {
     public abstract String getSecondDerivative();
 
     public abstract double getValueAt(double x, FunctionType functionType);
+
+    public abstract HashSet<Point> getXIntercepts();
+
+    public abstract HashSet<Point> getCriticalPoints();
+
+    public abstract HashSet<Point> getInflectionPoints();
 }

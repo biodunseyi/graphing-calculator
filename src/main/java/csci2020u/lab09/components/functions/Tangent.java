@@ -4,40 +4,41 @@ import java.util.HashSet;
 import csci2020u.lab09.GraphGUI;
 import csci2020u.lab09.components.Point;
 import csci2020u.lab09.enums.FunctionType;
+import csci2020u.lab09.enums.RootType;
 
 public class Tangent extends Trignometric {
-    
+
     public Tangent(GraphGUI gui, String function) {
         super(gui, function, "tan");
     }
 
     @Override
     public String getFirstDerivative() {
-        /*
-         * TODO: Return first derivative. Check Sine.java for an example.
-         * */
-
-        return "";
+        return "sec^2(x)";
     }
 
     @Override
     public String getSecondDerivative() {
-        /*
-         * TODO: Return second derivative. Check Sine.java for an example.
-         * */
-
-        return "";
+        return "2 sec^2(x) tan(x)";
     }
 
     @Override
     public double getValueAt(double x, FunctionType functionType) {
-        /*
-         * TODO: Return the y-value at x given the function. Check Sine.java for an example.
-         *  - Note the function type. For example, if functionType is FIRST_DERIVATIVE, use the the first derivative function to get the y-value.
-         *  - Note there are four cases of functionType: FIRST_DERIVATIVE, SECOND_DERIVATIVE, THIRD_DERIVATIVE and ORIGINAL
-         * */
+        if (Math.abs(Math.cos(x)) < 1e-6) {
+            return Double.NaN;
+        }
 
-        return 0;
+        switch (functionType) {
+            case FIRST_DERIVATIVE:
+                return 1 / (Math.cos(x) * Math.cos(x));
+            case SECOND_DERIVATIVE:
+                return 2 * (1 / (Math.cos(x) * Math.cos(x))) * Math.tan(x);
+            case THIRD_DERIVATIVE:
+                return 2 * (1 / (Math.cos(x) * Math.cos(x))) * (1 + 2 * Math.pow(Math.tan(x), 2));
+            case ORIGINAL:
+            default:
+                return Math.tan(x);
+        }
     }
 
     @Override
@@ -48,5 +49,10 @@ public class Tangent extends Trignometric {
     @Override
     public HashSet<Point> getInflectionPoints() {
         return new HashSet<>();
+    }
+
+    @Override
+    public HashSet<Point> getXIntercepts() {
+        return RootType.X_INTERCEPT.getRoots(gui, this, gui.getMinDomain(), gui.getMaxDomain());
     }
 }
